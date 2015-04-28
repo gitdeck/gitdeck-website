@@ -1,6 +1,44 @@
-<!-- Lets talk about geddy -->
-<div class="hero-unit geddy-welcome-box">
-  <h1>Hello, World!</h1>
-  <p>You've created a Geddy app and your server is running. If you already know what you're doing, feel free to jump into your app logic, if not...</p>
-  <p><%- linkTo('Lets get you started »', 'http://geddyjs.org/tutorial.html', {class: 'btn btn-primary btn-large'}) %></p>
+<div class="row">
+  <div class="col-sm-4">
+    <h2>How it Works</h2>
+    <p>
+      We provide users with a simple but powerful markup language called Bamboo to create slide files
+      in their github repositories.
+    </p>
+    <p>
+      <ol>
+        <li>Create a github repo or clone our example repo</li>
+        <li>Use our markup language to create a .gitdeck file in the root of the repo</li>
+        <li>Add the repo link to your profile</li>
+        <li>We parse your .gitdeck file and generate your slides</li>
+        <li>Access them from anywhere using a custom url</li>
+      </ol>
+    </p>
+  </div>
+  <div class="col-sm-4">
+    <h2>Documentation</h2>
+    <p>
+      Our parser and language are fully open source and available on our github repo. While
+      we do develop GitDeck independently, we encourage the community to submit pull requests
+      or feature requests.
+    </p>
+    <p>
+      <ul>
+        <li><a href="#">Getting Started with GitDeck</a></li>
+        <li><a href="#">The Bamboo Markup Language</a></li>
+        <li><a href="#">Bamboo Parser</a></li>
+      </ul>
+    </p>
+  </div>
+  <div class="col-sm-4">
+    <h2>Stay Informed</h2>
+    <p>GitDeck isn't ready just yet, but if you leave us your email we'll let you know
+    when it is. We hate spam as much as you do so we'll never share your email with anyone.</p>
+    <form id="email-form" class="form-inline">
+      <div class="form-group">
+        <input type="email" class="form-control" id="email" placeholder="email">
+      </div>
+      <button type="submit" class="btn btn-success">Add me!</button>
+    </form>
+  </div>
 </div>
