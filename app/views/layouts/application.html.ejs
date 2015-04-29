@@ -1,14 +1,23 @@
 <%= partial('layout_header'); %>
   <body>
     <div class="container">
-      <img id="logo" src='img/panda.svg'/>
-      <h1>
-        GitDeck
-        <small>make decks from your github repo</small>
-      </h1>
-      <hr/>
+      <div class="header">
+        <a href="/">
+        <img id="logo" src='img/panda.svg'/>
+        <h1>
+          GitDeck
+          <small>make decks from your github repo</small>
+        </h1>
+        </a>
+        <hr/>
+      </div>
       <%- displayFlash(flash); %>
       <%- render(); %>
+      <div class="row">
+        <div id="footer" class="col-sm-12">
+          Copyright 2015 &copy; GitDeck.me &mdash; all code and documentation is released under our <a href="#">Creative Commons License</a>
+        </div>
+      </div>
     </div>
   </body>
 <%= partial('layout_footer'); %>

@@ -23,8 +23,13 @@ var Main = function () {
     , template: 'app/views/main/index'
     });
   };
+
+  this.documentation = function(req, resp, params) {
+    this.respond({params: params}, {
+      format: 'html'
+    , template: 'app/views/main/documentation'
+    });
+  };
 };
 
 exports.Main = Main;
-
-
