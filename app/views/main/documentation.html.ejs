@@ -5,34 +5,223 @@
       <li>
         <a href="#getting-started">Getting Started</a>
         <ul class="nav nav-stacked">
-          <li><a href="#getting-started-clone">Clone the GitDeck Repository</a></li>
-          <li><a href="#getting-started-write">Write Your Deck Using Bamboo</a></li>
+          <li><a href="#getting-started-clone">Clone the Skeleton Repository</a></li>
+          <li><a href="#getting-started-add">Adding Slides</a></li>
+          <li><a href="#getting-started-temp">Choosing a Template</a></li>
+          <li><a href="#getting-started-gen">Generate Your Deck</a></li>
         </ul>
       </li>
       <li>
-        <a href="#GroupB">Group B</a>
+        <a href="#decks">Decks</a>
         <ul class="nav nav-stacked">
           <li><a href="#GroupBSub1">Sub-Group 1</a></li>
           <li><a href="#GroupBSub2">Sub-Group 2</a></li>
         </ul>
       </li>
       <li>
-        <a href="#GroupC">Group C</a>
+        <a href="#templates">Templates</a>
         <ul class="nav nav-stacked">
-          <li><a href="#GroupCSub1">Sub-Group 1</a></li>
-          <li><a href="#GroupCSub2">Sub-Group 2</a></li>
+          <li><a href="#templates-how-to">How to Use Templates</a></li>
+          <li><a href="#templates-db">GitDeck Template Database</a></li>
+          <li><a href="#templates-custom">Creating Custom Templates</a></li>
+          <li><a href="#templates-ex-simple">Simple Template Example</a></li>
+          <li><a href="#templates-ex-array">Templates With Array Support</a></li>
         </ul>
       </li>
     </ul>
   </nav>
+
   <div class="col-sm-9">
-    <h1>Bamboo Documentation</h1>
+    <h1>GitDeck Documentation</h1>
     <div class="doc-section">
+
+      <!-- START GETTING STARTED -->
       <h3 id="getting-started">Getting Started</h4>
 
-      <h4 id="getting-started-clone">Clone the GitDeck Repository</h4>
+        <h4 id="getting-started-clone">Clone the Skeleton Repository</h4>
 
-      <h4 id="getting-started-write">Write Your Deck Using Bamboo</h4>
+        <h4 id="getting-started-add">Adding Slides</h4>
+
+        <h4 id="getting-started-temp">Choosing a Template</h4>
+
+        <h4 id="getting-started-gen">Generate Your Deck</h4>
+      <!-- END GETTING STARTED -->
+
+      <!-- START DECKS -->
+      <h3 id="decks">Decks</h3>
+
+      <!-- END DECKS -->
+
+      <!-- START TEMPLATES -->
+      <h3 id="templates">Templates</h3>
+        <p>
+          You can use templates to make your GitDeck decks more stylish. We've designed GitDeck such that the slide content
+          is separate from the markup that dictates how the information should be displayed. This has several advantages:
+
+          <ul>
+            <li>You can change the design of your slides quickly by modifying one line in your JSON file.</li>
+            <li>You can modify the template slide by slide without affecting other slides.</li>
+            <li>It's much easier to parse the JSON file and extract the text data then it would be to parse markup as well.</li>
+          </ul>
+
+          This section goes over how to use the GitDeck templates, how to use the template database, and how to create your
+          own templates. We encourage user to contribute their custom templates back to the community.
+        </p>
+
+        <h4 id="templates-how-to">How to Use Templates</h4>
+          <p>
+            Templates can be applied to the whole deck or on an individual slide-by-slide basis.
+          </p>
+
+          <h5>Applying a Template to the Whole Deck</h5>
+          <p>
+            To add a global template, add a <code>"template"</code> field in the metadata part of your JSON file.
+
+            <pre>
+{
+  "title": "How to Build a Website",
+  "author": "John Smith",
+  "template": "path/to/template",
+  "slides": {}
+}</pre>
+
+            The path to the template must be relative to the JSON file. If this is a custom or downloaded template, we
+            recommend putting it in the same repository as the JSON file itself under a <code>templates</code> directory.
+          </p>
+
+          <h5>Applying a Template to Individual Slides</h5>
+          <p>
+            If you want to style individual slides instead of the whole deck, you can use the <code>"template"</code> field
+            in each individual slide object instead.
+
+            <pre>
+{
+  "title": "How to Build a Website",
+  "author": "John Smith",
+  "slides": {
+    "intro": {
+      "title": "Where To Start",
+      "template": "path/to/template"
+    },
+    "table-of-contents": {
+      "title": "What We're Going To Cover",
+      "template": "path/to/a/different/template",
+    }
+  }
+}</pre>
+
+            If both <code>"template"</code> fields are defined, then GitDeck will try to apply the global template to each
+            slide that doesn't specify its own template.
+          </p>
+
+        <h4 id="templates-db">GitDeck Template Database</h4>
+        <p>
+          GitDeck provides a database of templates which can be easily used within the JSON file. The database is hosted on
+          Github in the <a href="https://github.com/gitdeck/gitdeck-templates">gitdeck-templates</a> repository.
+
+          You can use the database instead of include local template files in your repository by using a special string in the
+          <code>"template"</code> field. Here's an example:
+
+          <pre>
+{
+"title": "How to Build a Website",
+"author": "John Smith",
+"template": "GitDeck::templates::basic",
+"slides": {}
+}</pre>
+
+          The JSON file above would use the template called <code>basic</code> from the repository.
+        </p>
+
+        <h4 id="templates-custom">Creating Custom Templates</h4>
+        <p>
+          Template creation is fairly easy if you're familiar with HTML, CSS and EJS. A few simple steps must be followed
+          to make sure the templates are valid prior to use:
+
+          <ul>
+            <li>Create a file called <code>[template-name].template.ejs</code> somewhere in the world.</li>
+            <li>Make sure the template is wrapped in a <code>div</code> with the class <code>.slide</code>.</li>
+            <li>Use standard EJS syntax to include the slide contents and fields into your template.</li>
+          </ul>
+
+          Below are a few examples to get your started with template creation.
+        </p>
+
+        <h4 id="templates-ex-simple">Simple Template Example</h4>
+        <p>
+          Here's an example of using fields with single strings as template parameters. It would generate
+          two slides with <code>h1</code> elements corresponding to the <code>"title"</code> fields defined in the slides file.
+
+          <h5>Template</h5>
+          <pre>
+&lt;div class="slide"&gt;
+  &lt;h1&gt;&lt;%= title %&gt;&lt;/h1&gt;
+&lt;/div&gt;</pre>
+
+          <h5>Slides</h5>
+          <pre>
+{
+  "title": "How to Build a Website",
+  "author": "John Smith",
+  "template": "path/to/template",
+  "slides": {
+    "intro": {
+      "title": "Where To Start"
+    },
+    "table-of-contents": {
+      "title": "What We're Going To Cover"
+    }
+  }
+}</pre>
+        </p>
+
+        <h4 id="templates-ex-array">Templates With Array Support</h4>
+        <p>
+          EJS allows for the parsing of simple arrays. GitDeck supports this configuration and it can be
+          used to define paragraphs in each slide. Let's extend the simple example from above to include
+          an array of paragraphs.
+
+          <h5>Template</h5>
+          <pre>
+&lt;div class="slide"&gt;
+  &lt;h1&gt;&lt;%= title %&gt;&lt;/h1&gt;
+  &lt;% for(var i = 0; i &lt; paragraphs.length; i++) { %&gt;
+    &lt;p&gt;&lt;%= paragraphs[i] %&gt;&lt;/p&gt;
+  &lt;% } %&gt;
+&lt;/div&gt;</pre>
+
+          <h5>Slides</h5>
+          <pre>
+{
+  "title": "How to Build a Website",
+  "author": "John Smith",
+  "template": "path/to/template",
+  "slides": {
+    "intro": {
+      "title": "Where To Start",
+      "paragraphs": [
+        "A small demo presentation from John Smith"
+      ]
+    },
+    "table-of-contents": {
+      "title": "What We're Going To Cover",
+      "paragraphs": [
+        "How to create HTML files",
+        "Adding style to your pages with CSS",
+        "Implementing frontend logic with Javascript"
+      ]
+    }
+  }
+}</pre>
+
+          In this example, the template looks for a field called <code>"paragraphs"</code> and expects it to be
+          an array. It then parses each element of the array and displays it in its own <code>p</code> element.
+        </p>
+
+      <!-- END TEMPLATES -->
+
+
     </div>
   </div>
+
 </div>
