@@ -98,10 +98,10 @@ a:hover {
 .bs-docs-sidebar .nav>.active>a,
 .bs-docs-sidebar .nav>li>a:hover,
 .bs-docs-sidebar .nav>li>a:focus {
-    color: #563d7c;
+    color: #5CB85C;
     text-decoration: none;
     background-color: transparent;
-    border-left-color: #563d7c;
+    border-left-color: #5CB85C;
 }
 /* all active links */
 .bs-docs-sidebar .nav>.active>a,
@@ -123,6 +123,10 @@ a:hover {
 /* show active nested list */
 .bs-docs-sidebar .nav>.active>ul.nav {
     display: block;
+}
+
+.doc-section {
+  overflow: auto;
 }
 
 .doc-section h4 {
