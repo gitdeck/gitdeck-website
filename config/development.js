@@ -33,7 +33,7 @@ var config = {
   , excludePattern: '\\.git|node_modules'
   }
 , hostname: null
-, port: 4000
+, port: 4005
 , model: {
     defaultAdapter: 'filesystem'
   }
