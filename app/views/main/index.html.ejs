@@ -2,7 +2,6 @@
   <div id="main-banner" class="col-sm-12 text-center">
     <h2>Generate your deck now!</h2>
     <p>GitDeck generates an HTML5 deck right from your Github repository.</p>
-    <form id="gen-form" class="form" action="/generate" method="POST">
       <div class="row">
         <div class="col-sm-6 col-sm-offset-3">
           <div id="repo-input" class="form-group">
@@ -13,12 +12,15 @@
       </div>
       <a href="#" id="submit-gen" class="btn btn-lg btn-success">Generate</a>
       <a href="#" id="learn" class="btn btn-lg btn-info">Learn More</a>
-    </form>
   </div>
   <div id="sec-banner" class="col-sm-12 text-center">
     <h2>Generate your deck now!</h2>
     <p>That repository has more than one GitDeck file. Please choose which one you want to use.</p>
     <div id="candidates" class="text-center"></div>
+  </div>
+  <div id="third-banner" class="col-sm-12 text-center">
+    <h2>Generating...</h2>
+    <p><img class="rotate" src="img/panda_medium.png" style="width:75px;height:68px"/></p>
   </div>
 </div>
 
@@ -54,65 +56,4 @@
   </div>
 </div>
 
-<script type="text/javascript">
-$('#submit-gen').click(function() {
-  // we check server-side too :) sneaky hobbitses
-  var url = $('#repo-url').val();
-  if (!url.match(/http(s)?:\/\/(www\.)?github\.com\/[a-zA-Z0-9\-_\.]+\/[a-zA-Z0-9\-_\.]+/)) {
-    $("#repo-input").addClass("has-error");
-    return;
-  } else {
-    url = url.split("/");
-    var repo = url[url.length - 1];
-    var user = url[url.length - 2];
-  }
-
-  $.ajax({
-    type: "GET",
-    url: "https://api.github.com/search/code?q=user:"+user+"+repo:"+repo+"+extension:gitdeck",
-    dataType: "json",
-    success: function(data) {
-
-      // make sure the API call returns more than 0 responses
-      if (data["total_count"] < 1) {
-        $("#repo-input").addClass("has-error");
-        return;
-      } else {
-        var files = [];
-
-        // extract the paths of each matching file
-        for (var i = 0; i < data["items"].length; i++) {
-          files.push(data["items"][i]["path"]);
-        }
-
-        // if there's only one deck, just roll with it
-        if (files.length == 1) {
-          $("#repo-path").val(files[0]);
-          $("#gen-form").submit();
-          return;
-        }
-
-        // for each candidate file, add a link for the user to choose
-        for (var i = 0; i < files.length; i++) {
-          var tmp = "<span class='thumbnail'>"+files[i]+"</span>";
-          $("#candidates").append(tmp);
-        }
-
-        // switch to the next banner
-        $("#main-banner").hide();
-        $("#sec-banner").show();
-
-      }
-    },
-    error: function(data) {
-      $("#repo-input").addClass("has-error");
-    }
-  });
-});
-
-$("#candidates").on("click", ".thumbnail", function() {
-  console.log('here');
-  $("#repo-path").val($(this).text());
-  $("#gen-form").submit();
-});
-</script>
+<script src="js/gitdeck.js"></script>
